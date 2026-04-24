@@ -61,3 +61,5 @@ g=np.random.normal(10,10,(5,3))
 # print ("Today is " + str(today))
 # print ("Tomorrow is "+ str(tomorrow))
 
+# x = np.random.rand(5)
+# print(x)
