@@ -4,13 +4,18 @@ import torch
 ROOT_DIR = Path(__file__).resolve().parent
 
 DATA_DIR = ROOT_DIR/"cifar10"
-CHECKPOINT = ROOT_DIR/"checkpoints/model.pth"
+CHECKPOINT_RESULT = ROOT_DIR / "checkpoints/model.pth"
+CHECKPOINT_BEST = ROOT_DIR / "checkpoints/best.pth"
 
 BATCH_SIZE = 128
-NUM_EPOCHES = 15
-LEARNING_RATE = 1e3
+NUM_EPOCHS = 15
+LEARNING_RATE = 1e-3
 NUM_WORKERS = 0
 VAL_RATIO = 0.1
+
+# CIFAR-10 normalization (train set statistics)
+MEAN = (0.4914, 0.4822, 0.4465)
+STD = (0.2470, 0.2435, 0.2616)
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 

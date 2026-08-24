@@ -1,36 +1,27 @@
-# CIFAR-10 CNN 图像分类
+# CIFAR-10 CNN 分类
 
-使用 PyTorch 在 CIFAR-10 数据集上训练卷积神经网络，完成 10 类图像分类。
+使用 PyTorch 在 CIFAR-10 数据集上训练一个简单 CNN，并完成测试与单张图片预测可视化。
 
 ## 环境要求
 
-- Python 3.8+
-- 可选：NVIDIA GPU + CUDA（训练会明显更快）
+- Python 3.10+
+- 建议使用虚拟环境
 
 ## 安装
 
-```bash
-# 创建并激活虚拟环境（推荐）
-python -m venv .venv
+1. 创建并激活虚拟环境（可选）：
 
+```bash
+python -m venv .venv
 # Windows
 .venv\Scripts\activate
-
 # Linux / macOS
 source .venv/bin/activate
 ```
 
-安装 PyTorch（按你的环境二选一）：
+2. 安装 PyTorch 与 torchvision（按你的 CUDA 版本从 [PyTorch 官网](https://pytorch.org/get-started/locally/) 选择安装命令；无 GPU 可选 CPU 版本）。
 
-```bash
-# CPU 版本
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
-
-# GPU 版本（示例：CUDA 12.4，其他版本见 https://pytorch.org）
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
-```
-
-安装其余依赖：
+3. 安装其余依赖：
 
 ```bash
 pip install -r requirements.txt
@@ -40,17 +31,26 @@ pip install -r requirements.txt
 
 ```
 CIFAR10/
-├── config.py      # 超参数与路径配置
-├── data.py        # 数据下载、划分与 DataLoader
-├── model.py       # CIFAR10CNN 模型定义
-├── train.py       # 训练脚本
-├── test.py        # 加载 checkpoint 与数据
-├── predict.py     # 可视化测试集样本
+├── config.py       # 超参数与路径配置
+├── data.py         # 数据下载、增强、划分 train/val/test
+├── model.py        # CIFAR10CNN 模型定义
+├── train.py        # 训练并保存权重
+├── test.py         # 在测试集上评估准确率
+├── predict.py      # 可视化单张图片的预测结果
 ├── requirements.txt
-├── cifar10/       # 数据集（自动下载，已 gitignore）
-├── checkpoints/   # 模型权重（训练后生成）
-└── runs/          # TensorBoard 日志（训练后生成）
+└── README.md
 ```
+
+首次运行会自动下载 CIFAR-10 到 `cifar10/`。训练日志写入 `runs/cifar10/`；`checkpoints/` 目录会在训练时自动创建，无需手动新建。
+
+训练结束会保存两个权重文件：
+
+| 文件 | 含义 |
+|------|------|
+| `checkpoints/best.pth` | 验证集准确率最高时的权重 |
+| `checkpoints/model.pth` | 最后一个 epoch 的权重 |
+
+`test.py` 与 `predict.py` 默认加载 `checkpoints/best.pth`（验证集最优权重）。若要用最后一个 epoch 的权重，将其中的 `CHECKPOINT_BEST` 改为 `CHECKPOINT_RESULT`。
 
 ## 使用方法
 
@@ -60,69 +60,42 @@ CIFAR10/
 python train.py
 ```
 
-首次运行会自动下载 CIFAR-10 到 `cifar10/`。训练结束后权重保存到 `checkpoints/model.pth`。
+默认训练 15 个 epoch，可在 `config.py` 中修改 `NUM_EPOCHS`、`BATCH_SIZE`、`LEARNING_RATE` 等。
 
-训练过程会写入 TensorBoard 日志：
+查看 TensorBoard：
 
 ```bash
-tensorboard --logdir runs
+tensorboard --logdir runs/cifar10
 ```
 
-在浏览器打开 http://localhost:6006 查看 loss 与验证准确率曲线。
+### 测试
+
+训练完成后：
+
+```bash
+python test.py
+```
 
 ### 预测可视化
-
-加载 checkpoint 并显示一张测试集图片：
 
 ```bash
 python predict.py
 ```
 
-### 检查数据加载
-
-```bash
-python data.py
-```
-
-会打印 train / val / test 的 batch 数量与样本形状。
-
-### 模型结构自检
-
-```bash
-python model.py
-```
+会弹出一张测试集图片，标题显示预测类别与真实标签。
 
 ## 配置说明
 
-在 `config.py` 中可修改：
+主要配置见 `config.py`：
 
 | 参数 | 默认值 | 说明 |
 |------|--------|------|
 | `BATCH_SIZE` | 128 | 批大小 |
-| `NUM_EPOCHES` | 15 | 训练轮数 |
-| `LEARNING_RATE` | 1e3 | Adam 学习率 |
+| `NUM_EPOCHS` | 15 | 训练轮数 |
+| `LEARNING_RATE` | 1e-3 | Adam 学习率 |
 | `VAL_RATIO` | 0.1 | 从训练集划出的验证集比例 |
-| `NUM_WORKERS` | 0 | DataLoader 工作进程数 |
-| `DEVICE` | 自动 | 有 CUDA 时用 GPU，否则 CPU |
+| `DEVICE` | 自动 | 有 CUDA 用 GPU，否则 CPU |
 
-## 模型结构
+## 类别
 
-`CIFAR10CNN` 为三层卷积 + 两层全连接：
-
-- 输入：32×32 RGB 图像
-- 卷积块：32 → 64 → 128 通道，每层后接 ReLU 与 MaxPool
-- 分类头：Flatten → Linear(2048, 256) → Dropout(0.5) → Linear(256, 10)
-- 训练时使用 RandomCrop、RandomHorizontalFlip 与归一化；验证/测试仅归一化
-
-## 数据集
-
-[CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html) 包含 10 个类别，每类 6000 张 32×32 彩色图：
-
-- 训练集：50,000（其中 10% 划为验证集）
-- 测试集：10,000
-
-类别：airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck
-
-## 许可证
-
-本项目仅供学习使用。CIFAR-10 数据集请遵循其原始许可与引用要求。
+CIFAR-10 共 10 类：airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck。

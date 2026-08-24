@@ -1,26 +1,36 @@
 import torch
 import matplotlib.pyplot as plt
 import config
-from data import get_dataloaders
+from data import get_test_loader
 from model import CIFAR10CNN
 
-model = CIFAR10CNN().to(config.DEVICE)
-model.load_state_dict(torch.load(config.CHECKPOINT, weights_only=True))
 
-train_loader, val_loader, test_loader = get_dataloaders()
+def main():
+    model = CIFAR10CNN().to(config.DEVICE)
+    model.load_state_dict(
+        torch.load(config.CHECKPOINT_BEST, weights_only=True, map_location=config.DEVICE)
+    )
 
-mean = torch.tensor([0.4914, 0.4822, 0.4465]).view(3, 1, 1)
-std = torch.tensor([0.2470, 0.2435, 0.2616]).view(3, 1, 1)
+    model.eval()
+
+    test_loader = get_test_loader()
+
+    mean = torch.tensor(config.MEAN).view(3, 1, 1)
+    std = torch.tensor(config.STD).view(3, 1, 1)
+
+    images, labels = next(iter(test_loader))
+    x = images[0:1].to(config.DEVICE)
+    with torch.no_grad():
+        pred = model(x)
+    pred_idx = pred.argmax(1).item()
+    actual_idx = labels[0].item()
+    img = images[0].cpu() * std + mean
+    img = img.clamp(0, 1).permute(1, 2, 0)
+    plt.imshow(img)
+    plt.title(f"pred: {config.CLASSES[pred_idx]}, actual: {config.CLASSES[actual_idx]}")
+    plt.axis("off")
+    plt.show()
 
 
-images, labels = next(iter(test_loader))  # 取第一批
-first_label = labels[0]                   # 对应标签
-img = images[0].cpu()
-img = img * std + mean
-img = img.clamp(0, 1)
-img = img.permute(1, 2, 0)
-
-plt.imshow(img)
-plt.title(config.CLASSES[first_label.item()])
-plt.axis("off")
-plt.show()
+if __name__ == "__main__":
+    main()

@@ -1,34 +1,48 @@
-# 下载 CIFAR-10、做数据增强/归一化、切出验证集、返回 train/val/test 三个 DataLoader。
 import torch
 from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
 import config
 
-def get_transformers():
-    mean = (0.4914, 0.4822, 0.4465)
-    std = (0.2470, 0.2435, 0.2616)
-
+def get_transforms():
     train_transformers = transforms.Compose(
         [
             transforms.RandomCrop(32, padding=4),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
-            transforms.Normalize(mean, std)
+            transforms.Normalize(config.MEAN, config.STD)
         ]
     )
 
     eval_transformer = transforms.Compose(
         [
             transforms.ToTensor(),
-            transforms.Normalize(mean, std)
+            transforms.Normalize(config.MEAN, config.STD)
         ]
     )
 
     return train_transformers, eval_transformer
 
-def get_dataloaders():
+def get_test_loader():
+    train_transformers, eval_transformers = get_transforms()
+    test_set = datasets.CIFAR10(
+        root=config.DATA_DIR,
+        train=False,
+        download=True,
+        transform=eval_transformers
+    )
 
-    train_transformers, eval_transformers = get_transformers()
+    test_loader = DataLoader(
+        dataset=test_set,
+        batch_size=config.BATCH_SIZE,
+        shuffle=False,
+        num_workers=config.NUM_WORKERS
+    )
+
+    return test_loader
+
+def get_train_val_loader():
+
+    train_transformers, eval_transformers = get_transforms()
 
     train_source = datasets.CIFAR10(
         root=config.DATA_DIR,
@@ -40,13 +54,6 @@ def get_dataloaders():
     val_source = datasets.CIFAR10(
         root=config.DATA_DIR,
         train=True,
-        download=True,
-        transform=eval_transformers
-    )
-
-    test_set = datasets.CIFAR10(
-        root=config.DATA_DIR,
-        train=False,
         download=True,
         transform=eval_transformers
     )
@@ -73,25 +80,17 @@ def get_dataloaders():
     val_loader = DataLoader(
         dataset=val_set,
         batch_size=config.BATCH_SIZE,
-        shuffle=True,
+        shuffle=False,
         num_workers=config.NUM_WORKERS
     )
 
-    test_loader = DataLoader(
-        dataset=test_set,
-        batch_size=config.BATCH_SIZE,
-        shuffle=True,
-        num_workers=config.NUM_WORKERS
-    )
-
-    return train_loader, val_loader, test_loader
+    return train_loader, val_loader
 
 def main():
-    train_loader, val_loader, test_loader = get_dataloaders()
+    train_loader, val_loader = get_train_val_loader()
     images, labels = next(iter(train_loader))
     print("train batch: ", len(train_loader))
     print("val batch: ", len(val_loader))
-    print("test batch: ", len(test_loader))
     print("image batch shape:", images.shape)
     print("label batch shape:", labels.shape)
     print("label sample:", labels[:8].tolist())
