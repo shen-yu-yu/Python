@@ -68,7 +68,7 @@ with torch.no_grad():
         labels_np = labels.cpu().numpy()
         pred_np = pred.cpu().numpy()
 
-        for i in range(images_np.shape[0]):
+        for i in range(images_np.shape[0]): # 64
             img = images_np[i].transpose(1, 2, 0)
             img = cv2.resize(img, (200, 200))  # 放大显示
 
