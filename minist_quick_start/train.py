@@ -1,6 +1,7 @@
 import torch
 import config
 import requests
+import os
 from torch import nn
 from model import NeuralNetWork
 from dataset import training_loader
@@ -31,8 +32,9 @@ for i in range(config.epoches):
 torch.save(model.state_dict(), "model.pth")
 print("model save successful")
 
+send_key = os.environ.get("SERVERCHAN_SENDKEY")
 
 requests.get(
-    "https://sctapi.ftqq.com/SCT403565Tz188unbXVN3yKOfxJPhMvF8u.send",
+    f"https://sctapi.ftqq.com/{send_key}.send",
     params={"title": "训练完成", "desp": "FashionMNIST 训练结束"}
 )
