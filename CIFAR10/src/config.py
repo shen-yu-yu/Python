@@ -1,11 +1,16 @@
 from pathlib import Path
+
 import torch
 
-ROOT_DIR = Path(__file__).resolve().parent
+ROOT_DIR = Path(__file__).resolve().parent.parent
 
-DATA_DIR = ROOT_DIR/"cifar10"
-CHECKPOINT_RESULT = ROOT_DIR / "checkpoints/model.pth"
-CHECKPOINT_BEST = ROOT_DIR / "checkpoints/best.pth"
+DATA_DIR = ROOT_DIR / "data"
+OUTPUT_DIR = ROOT_DIR / "outputs"
+CHECKPOINT_DIR = OUTPUT_DIR / "checkpoints"
+RUNS_DIR = OUTPUT_DIR / "runs" / "cifar10"
+
+CHECKPOINT_RESULT = CHECKPOINT_DIR / "model.pth"
+CHECKPOINT_BEST = CHECKPOINT_DIR / "best.pth"
 
 BATCH_SIZE = 128
 NUM_EPOCHS = 15
@@ -33,4 +38,3 @@ CLASSES = [
 ]
 
 NUM_CLASSES = len(CLASSES)
-

@@ -1,6 +1,7 @@
 import torch
 from torch import nn
-import config
+
+from . import config
 
 
 class CIFAR10CNN(nn.Module):
@@ -25,7 +26,7 @@ class CIFAR10CNN(nn.Module):
             nn.Flatten(),
             nn.Linear(128 * 4 * 4, 256),
             nn.ReLU(inplace=True),
-            nn.Dropout(p=0.5),  # 训练时随机丢掉一部分神经元，减轻过拟合
+            nn.Dropout(p=0.5),
             nn.Linear(256, num_classes),
         )
 
@@ -34,10 +35,11 @@ class CIFAR10CNN(nn.Module):
         x = self.classifier(x)
         return x
 
+
 if __name__ == "__main__":
     model = CIFAR10CNN()
-    dummy = torch.randn(8, 3, 32, 32)  # 假装一个 batch
+    dummy = torch.randn(8, 3, 32, 32)
     logits = model(dummy)
     print(model)
     print("input :", dummy.shape)
-    print("output:", logits.shape)  # 期望: torch.Size([8, 10])
+    print("output:", logits.shape)

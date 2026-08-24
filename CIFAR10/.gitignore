@@ -1,6 +1,19 @@
-# CIFAR-10 数据集（体积较大，勿提交到 Git）
-cifar10
-runs
-checkpoints
+# Dataset and runtime outputs
+data/
+outputs/
 
+# Legacy paths (before restructure)
+cifar10/
+checkpoints/
+runs/
 
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environment
+.venv/
+
+# IDE
+.idea/
