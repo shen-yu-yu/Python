@@ -1,0 +1,9 @@
+# PyTorch — 若需 GPU，请按 README 从官网选择 CUDA 版本安装
+torch>=2.0.0
+torchvision>=0.15.0
+
+# 训练日志
+tensorboard>=2.14.0
+
+# 预测可视化（predict.py）
+matplotlib>=3.7.0
