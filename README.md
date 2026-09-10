@@ -23,12 +23,12 @@
 
 ### 核心原则
 
-| 原则 | 说明 |
-|------|------|
-| **先跑通，再理解** | 先让代码能训练、能出结果，再回头搞懂每一行 |
-| **一个项目贯穿** | 用 CIFAR-10 分类器走通全流程，比看 10 个零散教程更有效 |
+| 原则              | 说明                                                             |
+| --------------- | -------------------------------------------------------------- |
+| **先跑通，再理解**     | 先让代码能训练、能出结果，再回头搞懂每一行                                          |
+| **一个项目贯穿**      | 用 CIFAR-10 分类器走通全流程，比看 10 个零散教程更有效                             |
 | **只学当前用到的 20%** | 图像分类只需：Tensor、Dataset/DataLoader、nn.Module、loss、optimizer、训练循环 |
-| **每天写代码** | 看 1 小时不如自己写 30 分钟、改 30 分钟 |
+| **每天写代码**       | 看 1 小时不如自己写 30 分钟、改 30 分钟                                      |
 
 ### 记忆口诀
 
@@ -65,17 +65,17 @@ torchvision
 
 ### 按「你想做什么」查找
 
-| 你想做的事 | 导入方式 | 示例 |
-|------------|----------|------|
-| 创建张量、搬到 GPU | `import torch` | `torch.randn(2,3,32,32).to(device)` |
-| 定义卷积/全连接层 | `import torch.nn as nn` | `nn.Conv2d(3, 64, 3)` |
-| 损失函数 | `torch.nn` | `nn.CrossEntropyLoss()` |
-| 优化器 | `import torch.optim as optim` | `optim.Adam(model.parameters(), lr=1e-3)` |
-| 数据加载 | `torch.utils.data` | `DataLoader(dataset, batch_size=64)` |
-| 下载 CIFAR-10 | `torchvision.datasets` | `datasets.CIFAR10(root=..., download=True)` |
-| 图片转 Tensor、增强 | `torchvision.transforms` | `transforms.ToTensor()`、`RandomHorizontalFlip()` |
-| 预训练 ResNet | `torchvision.models` | `models.resnet18(weights=...)` |
-| 保存/加载模型 | `torch` | `torch.save(state_dict, path)` |
+| 你想做的事         | 导入方式                          | 示例                                               |
+| ------------- | ----------------------------- | ------------------------------------------------ |
+| 创建张量、搬到 GPU   | `import torch`                | `torch.randn(2,3,32,32).to(device)`              |
+| 定义卷积/全连接层     | `import torch.nn as nn`       | `nn.Conv2d(3, 64, 3)`                            |
+| 损失函数          | `torch.nn`                    | `nn.CrossEntropyLoss()`                          |
+| 优化器           | `import torch.optim as optim` | `optim.Adam(model.parameters(), lr=1e-3)`        |
+| 数据加载          | `torch.utils.data`            | `DataLoader(dataset, batch_size=64)`             |
+| 下载 CIFAR-10   | `torchvision.datasets`        | `datasets.CIFAR10(root=..., download=True)`      |
+| 图片转 Tensor、增强 | `torchvision.transforms`      | `transforms.ToTensor()`、`RandomHorizontalFlip()` |
+| 预训练 ResNet    | `torchvision.models`          | `models.resnet18(weights=...)`                   |
+| 保存/加载模型       | `torch`                       | `torch.save(state_dict, path)`                   |
 
 ### 典型 import 模板（CIFAR-10 / 图像分类）
 
@@ -114,26 +114,26 @@ help(nn.CrossEntropyLoss)     # 完整文档
 
 ### 难度递进表
 
-| 阶段 | 读什么 | 规模 | 目标 |
-|------|--------|------|------|
-| ★☆☆☆☆ | PyTorch 官方 MNIST 快速入门 | ~100 行 | 认识标准训练结构 |
-| ★☆☆☆☆ | 你自己的 DigitVision | 小项目 | 对照理解配置、engine、model 分层 |
-| ★★☆☆☆ | PyTorch 官方 CIFAR-10 教程 | ~150 行 | 彩色图 + 简单 CNN |
-| ★★☆☆☆ | github.com/pytorch/examples/mnist | 单文件 | 最简可运行范例 |
-| ★★★☆☆ | torchvision/models/resnet.py | 单模型文件 | 学 nn.Module 嵌套与 forward |
-| ★★★☆☆ | karpathy/minGPT 或 nanoGPT | 小仓库 | 学清晰的项目组织 |
-| ★★★★☆ | Ultralytics YOLO（按文件读） | 大仓库 | 学工业级训练管线 |
+| 阶段    | 读什么                               | 规模     | 目标                      |
+| ----- | --------------------------------- | ------ | ----------------------- |
+| ★☆☆☆☆ | PyTorch 官方 MNIST 快速入门             | ~100 行 | 认识标准训练结构                |
+| ★☆☆☆☆ | 你自己的 DigitVision                  | 小项目    | 对照理解配置、engine、model 分层  |
+| ★★☆☆☆ | PyTorch 官方 CIFAR-10 教程            | ~150 行 | 彩色图 + 简单 CNN            |
+| ★★☆☆☆ | github.com/pytorch/examples/mnist | 单文件    | 最简可运行范例                 |
+| ★★★☆☆ | torchvision/models/resnet.py      | 单模型文件  | 学 nn.Module 嵌套与 forward |
+| ★★★☆☆ | karpathy/minGPT 或 nanoGPT         | 小仓库    | 学清晰的项目组织                |
+| ★★★★☆ | Ultralytics YOLO（按文件读）            | 大仓库    | 学工业级训练管线                |
 
 ---
 
 ### 3.1 PyTorch 官方教程（首选）
 
-| 教程 | 链接 |
-|------|------|
-| 60 分钟入门 | https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html |
-| MNIST 快速入门 | https://pytorch.org/tutorials/beginner/basics/quickstart_tutorial.html |
-| CIFAR-10 分类 | https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html |
-| 数据加载专题 | https://pytorch.org/tutorials/beginner/basics/data_tutorial.html |
+| 教程            | 链接                                                                     |
+| ------------- | ---------------------------------------------------------------------- |
+| 60 分钟入门       | https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html  |
+| MNIST 快速入门    | https://pytorch.org/tutorials/beginner/basics/quickstart_tutorial.html |
+| CIFAR-10 分类   | https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html     |
+| 数据加载专题        | https://pytorch.org/tutorials/beginner/basics/data_tutorial.html       |
 | 自定义 nn.Module | https://pytorch.org/tutorials/beginner/basics/buildmodel_tutorial.html |
 
 **读法**：先全局搜索 `for epoch`，定位训练循环，再往上追数据、往下追 `model`。
@@ -159,6 +159,7 @@ DigitVision/
 **推荐阅读顺序**：`config.yaml` → `train.py`（主循环）→ `digit_classifier.py` → `engine.py`
 
 **对照问题**（读的时候问自己）：
+
 - batch 从哪来？shape 是多少？
 - loss 用的什么？label 是什么类型？
 - 模型保存在哪一行？
@@ -169,12 +170,12 @@ DigitVision/
 
 仓库：https://github.com/pytorch/examples
 
-| 目录 | 内容 | 建议 |
-|------|------|------|
-| `mnist/` | 最简完整训练 | **第一个 clone 读的** |
-| `dcgan/` | 生成对抗网络 | 学完分类后再看 |
-| `fast_neural_style/` | 风格迁移 | 看项目结构 |
-| `imagenet/` | ImageNet 训练 | 进阶，先跳过 |
+| 目录                   | 内容          | 建议               |
+| -------------------- | ----------- | ---------------- |
+| `mnist/`             | 最简完整训练      | **第一个 clone 读的** |
+| `dcgan/`             | 生成对抗网络      | 学完分类后再看          |
+| `fast_neural_style/` | 风格迁移        | 看项目结构            |
+| `imagenet/`          | ImageNet 训练 | 进阶，先跳过           |
 
 ---
 
@@ -190,6 +191,7 @@ print(inspect.getfile(resnet18))
 ```
 
 **重点阅读**：
+
 1. `class ResNet(nn.Module)` 的 `__init__`：层怎么堆
 2. `def forward(self, x)`：张量 shape 怎么变
 3. `BasicBlock` / `Bottleneck`：子模块怎么组合
@@ -200,12 +202,12 @@ print(inspect.getfile(resnet18))
 
 ### 3.5 小型优质开源项目
 
-| 项目 | 地址 | 适合学什么 |
-|------|------|------------|
-| minGPT | https://github.com/karpathy/minGPT | 极简、可读性极高的模型代码 |
-| nanoGPT | https://github.com/karpathy/nanoGPT | 单文件训练脚本怎么写 |
-| timm | https://github.com/huggingface/pytorch-image-models | 工业级 CNN，选一个 resnet 读 |
-| Pytorch-UNet | https://github.com/milesial/Pytorch-UNet | 图像分割，比分类多一步 |
+| 项目           | 地址                                                  | 适合学什么                |
+| ------------ | --------------------------------------------------- | -------------------- |
+| minGPT       | https://github.com/karpathy/minGPT                  | 极简、可读性极高的模型代码        |
+| nanoGPT      | https://github.com/karpathy/nanoGPT                 | 单文件训练脚本怎么写           |
+| timm         | https://github.com/huggingface/pytorch-image-models | 工业级 CNN，选一个 resnet 读 |
+| Pytorch-UNet | https://github.com/milesial/Pytorch-UNet            | 图像分割，比分类多一步          |
 
 ---
 
@@ -224,6 +226,7 @@ print(inspect.getfile(resnet18))
 ```
 
 **读之前先回答三个问题**：
+
 1. 数据从哪进？（dataset → dataloader）
 2. loss 在哪算？
 3. `optimizer.step()` 在哪？
@@ -290,12 +293,12 @@ with torch.no_grad():
 
 ### 第五步：改一行、跑一下
 
-| 改动 | 观察什么 |
-|------|----------|
-| `batch_size` 改大/改小 | 显存、速度 |
-| `lr` 改成 0.1 | loss 是否爆炸 |
-| 注释掉 `RandomHorizontalFlip` | 准确率变化 |
-| 少训 1 个 epoch | 流程是否跑通 |
+| 改动                         | 观察什么      |
+| -------------------------- | --------- |
+| `batch_size` 改大/改小         | 显存、速度     |
+| `lr` 改成 0.1                | loss 是否爆炸 |
+| 注释掉 `RandomHorizontalFlip` | 准确率变化     |
+| 少训 1 个 epoch               | 流程是否跑通    |
 
 **能改能动，才算读懂一层。**
 
@@ -336,6 +339,7 @@ print(x.shape, x.device)
 **目标**：数据增强、学习率调度、保存/加载、单张图预测。
 
 **练习**：
+
 - `RandomCrop`、`RandomHorizontalFlip`
 - `StepLR` 或 `CosineAnnealingLR`
 - `torch.save` / `torch.load`
@@ -354,12 +358,12 @@ print(x.shape, x.device)
 
 ### 每周检验标准
 
-| 周 | 你能做到 |
-|----|----------|
-| 1 | 不看文档写出 DataLoader + ToTensor |
-| 2 | 不看文档写出完整训练循环 |
-| 3 | 保存模型并加载预测一张图 |
-| 4 | 在 YOLO 项目里找到 trainer 的三条主线 |
+| 周   | 你能做到                         |
+| --- | ---------------------------- |
+| 1   | 不看文档写出 DataLoader + ToTensor |
+| 2   | 不看文档写出完整训练循环                 |
+| 3   | 保存模型并加载预测一张图                 |
+| 4   | 在 YOLO 项目里找到 trainer 的三条主线   |
 
 ---
 
@@ -414,14 +418,14 @@ torch.save(model.state_dict(), "model.pth")
 
 ## 7. 常见报错与排查
 
-| 报错 | 常见原因 | 解决办法 |
-|------|----------|----------|
-| `size mismatch` | 输入 shape 与层定义不符 | 打印每层输入输出 shape |
-| `CUDA out of memory` | batch 太大或模型太大 | 减小 batch_size |
-| `expected scalar type Long but found Float` | 分类 label 应是 int64 | `labels.long()` |
-| `grad can be implicitly created only for scalar` | loss 不是标量就 backward | 检查 loss 是否 `.mean()` |
-| `No module named torchvision` | 环境没装 | `pip install torchvision` |
-| pip 装 lxml 编译失败 | 缺 C++ 编译器 | `conda install -c conda-forge lxml` |
+| 报错                                               | 常见原因                | 解决办法                                |
+| ------------------------------------------------ | ------------------- | ----------------------------------- |
+| `size mismatch`                                  | 输入 shape 与层定义不符     | 打印每层输入输出 shape                      |
+| `CUDA out of memory`                             | batch 太大或模型太大       | 减小 batch_size                       |
+| `expected scalar type Long but found Float`      | 分类 label 应是 int64   | `labels.long()`                     |
+| `grad can be implicitly created only for scalar` | loss 不是标量就 backward | 检查 loss 是否 `.mean()`                |
+| `No module named torchvision`                    | 环境没装                | `pip install torchvision`           |
+| pip 装 lxml 编译失败                                  | 缺 C++ 编译器           | `conda install -c conda-forge lxml` |
 
 **通用习惯**：报错先看**最后 5 行**；训练时随手 `print(tensor.shape)`。
 
@@ -429,14 +433,15 @@ torch.save(model.state_dict(), "model.pth")
 
 ## 8. 每天怎么学（1～2 小时）
 
-| 时间 | 做什么 |
-|------|--------|
-| 20 分钟 | 看官方文档/教程的**一个小节** |
-| 40 分钟 | **自己敲代码**（尽量不复制粘贴） |
+| 时间    | 做什么                 |
+| ----- | ------------------- |
+| 20 分钟 | 看官方文档/教程的**一个小节**   |
+| 40 分钟 | **自己敲代码**（尽量不复制粘贴）  |
 | 20 分钟 | 改一个参数，观察 loss/准确率变化 |
-| 10 分钟 | 记笔记：今天学了什么、卡在哪 |
+| 10 分钟 | 记笔记：今天学了什么、卡在哪      |
 
 **比多看教程更有效的事**：
+
 - 把 `lr=0.001` 改成 `0.1`，看 loss 会不会炸
 - 把 `batch_size` 从 64 改成 4，看训练速度
 - 注释掉数据增强，看准确率差多少
@@ -471,6 +476,7 @@ torch.save(model.state_dict(), "model.pth")
 **任务**：输入 32×32 彩色图，分类为 10 类（飞机、汽车、鸟、猫、鹿、狗、青蛙、马、船、卡车）。
 
 **将覆盖的知识点**：
+
 - Tensor 与 GPU
 - Dataset、DataLoader
 - nn.Module 与自定义 CNN
@@ -486,7 +492,3 @@ torch.save(model.state_dict(), "model.pth")
 ## 附录 B：一句话总结
 
 > **用一个完整小项目（CIFAR-10）走通全流程；读代码从官方 MNIST → DigitVision → ResNet → YOLO trainer；每天写代码、改参数、看 shape 和报错；不会就 Ctrl+点击或 help()。**
-
----
-
-*本文档由 Cursor AI 助手根据学习对话整理生成。*
