@@ -1,11 +1,8 @@
 from pathlib import Path
-
 import torch
 from torch.utils.data import DataLoader
-
 from . import config
 from .model import CIFAR10CNN
-
 
 def ensure_output_dirs() -> None:
     config.CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)

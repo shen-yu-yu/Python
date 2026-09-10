@@ -1,9 +1,7 @@
 import torch
 from torch.utils.data import DataLoader, Subset
 from torchvision import datasets, transforms
-
 from . import config
-
 
 def get_transforms():
     train_transform = transforms.Compose(
@@ -61,10 +59,12 @@ def get_train_val_loader():
         transform=eval_transform,
     )
 
+    # 获取训练集和验证集的长度
     total = len(train_source)
     val_size = int(total * config.VAL_RATIO)
     train_size = total - val_size
 
+    # 选取索引
     generator = torch.Generator().manual_seed(42)
     indices = torch.randperm(total, generator=generator).tolist()
     train_indices = indices[:train_size]

@@ -3,7 +3,6 @@ import torch
 import torchvision.datasets as dataset
 import torchvision.transforms as transforms
 import torch.utils.data as data_utils
-
 from model.digit_classifier import DigitClassifier
 from utils.config import load_yaml
 from utils.engine import eval_step

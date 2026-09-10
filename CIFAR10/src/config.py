@@ -4,7 +4,7 @@ import torch
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 
-DATA_DIR = ROOT_DIR / "data"
+DATA_DIR = ROOT_DIR / "cifar10"
 OUTPUT_DIR = ROOT_DIR / "outputs"
 CHECKPOINT_DIR = OUTPUT_DIR / "checkpoints"
 RUNS_DIR = OUTPUT_DIR / "runs" / "cifar10"
